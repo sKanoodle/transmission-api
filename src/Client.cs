@@ -49,6 +49,40 @@ namespace Transmission.Api
         }
     }
 
+    public class Fields
+    {
+        public static Fields Name = new Fields();
+
+        private BitArray Array { get; }
+
+
+        private Fields(TorrentField field)
+        {
+            Array = new BitArray(Enum.GetValues(typeof(TorrentField)).Length, false);
+        }
+
+        private Fields(BitArray array)
+        {
+            Array = array;
+        }
+
+        public static Fields operator |(Fields f1, Fields f2)
+        {
+            return new Fields(f1.Array.Or(f2.Array));
+        }
+
+        public string[] ToStringRepresentation()
+        {
+        }
+
+        private readonly string[] LookupArray = new string[]
+        {
+            "",
+            "",
+            "",
+        };
+    }
+
     enum TorrentField
     {
         ActivityDate,
