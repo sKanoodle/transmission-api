@@ -19,7 +19,7 @@ namespace Transmission.Api
         public Client(string address, string user, string pass)
         {
             Address = address;
-            HttpClient = new HttpClient(new HttpClientHandler {Credentials = new NetworkCredential(user, pass)});
+            HttpClient = new HttpClient(new HttpClientHandler { Credentials = new NetworkCredential(user, pass) });
         }
 
         public Client(string address)
@@ -28,15 +28,21 @@ namespace Transmission.Api
             HttpClient = new HttpClient();
         }
 
+        public async Task<Torrent[]> TorrentGetAsync(Fields fields)
+        {
+            var result = await TorrentGetAsync(new TorrentGetRequest<string[]> { Fields = fields.ToStringRepresentation() });
+            return result.Torrents;
+        }
+
         private async Task<TorrentGetResponse> TorrentGetAsync<T>(TorrentGetRequest<T> request)
         {
             return await GetResponseAsync<TorrentGetResponse, TorrentGetRequest<T>>(request);
         }
 
-        private async Task<T> GetResponseAsync<T, U>(U request) where U: ArgumentsBase
+        private async Task<T> GetResponseAsync<T, U>(U request) where U : ArgumentsBase
         {
             var wrappedRequest = new Request<U> { Arguments = request };
-            var response = await HttpClient.PostAsync(Address, new StringContent(JsonConvert.SerializeObject(wrappedRequest)));
+            var response = await HttpClient.PostAsync(Address, new StringContent(JsonConvert.SerializeObject(wrappedRequest, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore })));
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
@@ -53,14 +59,82 @@ namespace Transmission.Api
     public class Fields
     {
         public static readonly Fields All = new Fields(new BitArray(Enum.GetValues(typeof(TorrentField)).Length, true));
+
+        public static readonly Fields ActivityDate = new Fields(TorrentField.ActivityDate);
+        public static readonly Fields AddedDate = new Fields(TorrentField.AddedDate);
+        public static readonly Fields BandwidthPriority = new Fields(TorrentField.BandwidthPriority);
+        public static readonly Fields Comment = new Fields(TorrentField.Comment);
+        public static readonly Fields CorruptEver = new Fields(TorrentField.CorruptEver);
+        public static readonly Fields Creator = new Fields(TorrentField.Creator);
+        public static readonly Fields DateCreated = new Fields(TorrentField.DateCreated);
+        public static readonly Fields DesiredAvailable = new Fields(TorrentField.DesiredAvailable);
+        public static readonly Fields DoneDate = new Fields(TorrentField.DoneDate);
+        public static readonly Fields DownloadDir = new Fields(TorrentField.DownloadDir);
+        public static readonly Fields DownloadedEver = new Fields(TorrentField.DownloadedEver);
+        public static readonly Fields DownloadLimit = new Fields(TorrentField.DownloadLimit);
+        public static readonly Fields DownloadLimited = new Fields(TorrentField.DownloadLimited);
+        public static readonly Fields Error = new Fields(TorrentField.Error);
+        public static readonly Fields ErrorString = new Fields(TorrentField.ErrorString);
+        public static readonly Fields Eta = new Fields(TorrentField.Eta);
+        public static readonly Fields EtaIdle = new Fields(TorrentField.EtaIdle);
+        public static readonly Fields Files = new Fields(TorrentField.Files);
+        public static readonly Fields FileStats = new Fields(TorrentField.FileStats);
+        public static readonly Fields HashString = new Fields(TorrentField.HashString);
+        public static readonly Fields HaveUnchecked = new Fields(TorrentField.HaveUnchecked);
+        public static readonly Fields HaveValid = new Fields(TorrentField.HaveValid);
+        public static readonly Fields HonorsSessionLimits = new Fields(TorrentField.HonorsSessionLimits);
+        public static readonly Fields Id = new Fields(TorrentField.Id);
+        public static readonly Fields IsFinished = new Fields(TorrentField.IsFinished);
+        public static readonly Fields IsPrivate = new Fields(TorrentField.IsPrivate);
+        public static readonly Fields IsStalled = new Fields(TorrentField.IsStalled);
+        public static readonly Fields LeftUntilDone = new Fields(TorrentField.LeftUntilDone);
+        public static readonly Fields MagnetLink = new Fields(TorrentField.MagnetLink);
+        public static readonly Fields ManualAnnounceTime = new Fields(TorrentField.ManualAnnounceTime);
+        public static readonly Fields MaxConnectedPeers = new Fields(TorrentField.MaxConnectedPeers);
+        public static readonly Fields MetadataPercentComplete = new Fields(TorrentField.MetadataPercentComplete);
         public static readonly Fields Name = new Fields(TorrentField.Name);
+        public static readonly Fields PeerLimit = new Fields(TorrentField.PeerLimit);
+        public static readonly Fields Peers = new Fields(TorrentField.Peers);
+        public static readonly Fields PeersConnected = new Fields(TorrentField.PeersConnected);
+        public static readonly Fields PeersFrom = new Fields(TorrentField.PeersFrom);
+        public static readonly Fields PeersGettingFromUs = new Fields(TorrentField.PeersGettingFromUs);
+        public static readonly Fields PeersSendingToUs = new Fields(TorrentField.PeersSendingToUs);
+        public static readonly Fields PercentDone = new Fields(TorrentField.PercentDone);
+        public static readonly Fields Pieces = new Fields(TorrentField.Pieces);
+        public static readonly Fields PieceCount = new Fields(TorrentField.PieceCount);
+        public static readonly Fields PieceSize = new Fields(TorrentField.PieceSize);
+        public static readonly Fields Priorities = new Fields(TorrentField.Priorities);
+        public static readonly Fields QueuePosition = new Fields(TorrentField.QueuePosition);
+        public static readonly Fields RateDownload = new Fields(TorrentField.RateDownload);
+        public static readonly Fields RateUpload = new Fields(TorrentField.RateUpload);
+        public static readonly Fields RecheckProgress = new Fields(TorrentField.RecheckProgress);
+        public static readonly Fields SecondsDownloading = new Fields(TorrentField.SecondsDownloading);
+        public static readonly Fields SecondsSeeding = new Fields(TorrentField.SecondsSeeding);
+        public static readonly Fields SeedIdleLimit = new Fields(TorrentField.SeedIdleLimit);
+        public static readonly Fields SeedIdleMode = new Fields(TorrentField.SeedIdleMode);
+        public static readonly Fields SeedRatioLimit = new Fields(TorrentField.SeedRatioLimit);
+        public static readonly Fields SeedRatioMode = new Fields(TorrentField.SeedRatioMode);
+        public static readonly Fields SizeWhenDone = new Fields(TorrentField.SizeWhenDone);
+        public static readonly Fields StartDate = new Fields(TorrentField.StartDate);
+        public static readonly Fields Status = new Fields(TorrentField.Status);
+        public static readonly Fields Trackers = new Fields(TorrentField.Trackers);
+        public static readonly Fields TrackerStats = new Fields(TorrentField.TrackerStats);
+        public static readonly Fields TotalSize = new Fields(TorrentField.TotalSize);
+        public static readonly Fields TorrentFile = new Fields(TorrentField.TorrentFile);
+        public static readonly Fields UploadedEver = new Fields(TorrentField.UploadedEver);
+        public static readonly Fields UploadLimit = new Fields(TorrentField.UploadLimit);
+        public static readonly Fields UploadLimited = new Fields(TorrentField.UploadLimited);
+        public static readonly Fields UploadRatio = new Fields(TorrentField.UploadRatio);
+        public static readonly Fields Wanted = new Fields(TorrentField.Wanted);
+        public static readonly Fields Webseeds = new Fields(TorrentField.Webseeds);
+        public static readonly Fields WebseedsSendingToUs = new Fields(TorrentField.WebseedsSendingToUs);
 
         private BitArray Array { get; }
 
         private Fields(TorrentField field)
         {
             Array = new BitArray(Enum.GetValues(typeof(TorrentField)).Length, false);
-            Array[(int)field] = true;
+            Array.Set((int)field, true);
         }
 
         private Fields(BitArray array)
@@ -75,6 +149,11 @@ namespace Transmission.Api
 
         public string[] ToStringRepresentation()
         {
+            List<string> result = new List<string>();
+            for (int i = 0; i < Array.Length; i++)
+                if (Array[i])
+                    result.Add(LookupArray[i]);
+            return result.ToArray();
         }
 
         /// <summary>
@@ -82,9 +161,74 @@ namespace Transmission.Api
         /// </summary>
         private readonly string[] LookupArray = new string[]
         {
-            "",
-            "",
-            "",
+            "activityDate",
+            "addedDate",
+            "bandwidthPriority",
+            "comment",
+            "corruptEver",
+            "creator",
+            "dateCreated",
+            "desiredAvailable",
+            "doneDate",
+            "downloadDir",
+            "downloadedEver",
+            "downloadLimit",
+            "downloadLimited",
+            "error",
+            "errorString",
+            "eta",
+            "etaIdle",
+            "files",
+            "fileStats",
+            "hashString",
+            "haveUnchecked",
+            "haveValid",
+            "honorsSessionLimits",
+            "id",
+            "isFinished",
+            "isPrivate",
+            "isStalled",
+            "leftUntilDone",
+            "magnetLink",
+            "manualAnnounceTime",
+            "maxConnectedPeers",
+            "metadataPercentComplete",
+            "name",
+            "peer-limit",
+            "peers",
+            "peersConnected",
+            "peersFrom",
+            "peersGettingFromUs",
+            "peersSendingToUs",
+            "percentDone",
+            "pieces",
+            "pieceCount",
+            "pieceSize",
+            "priorities",
+            "queuePosition",
+            "rateDownload",
+            "rateUpload",
+            "recheckProgress",
+            "secondsDownloading",
+            "secondsSeeding",
+            "seedIdleLimit",
+            "seedIdleMode",
+            "seedRatioLimit",
+            "seedRatioMode",
+            "sizeWhenDone",
+            "startDate",
+            "status",
+            "trackers",
+            "trackerStats",
+            "totalSize",
+            "torrentFile",
+            "uploadedEver",
+            "uploadLimit",
+            "uploadLimited",
+            "uploadRatio",
+            "wanted",
+            "webseeds",
+            "webseedsSendingToUs",
         };
     }
 
@@ -177,13 +321,13 @@ namespace Transmission.Api
         [JsonProperty("dateCreated")]
         public int DateCreated { get; set; }
         [JsonProperty("desiredAvailable")]
-        public int DesiredAvailable { get; set; }
+        public long DesiredAvailable { get; set; }
         [JsonProperty("doneDate")]
         public int DoneDate { get; set; }
         [JsonProperty("downloadDir")]
         public string DownloadDir { get; set; }
         [JsonProperty("downloadedEver")]
-        public int DownloadedEver { get; set; }
+        public long DownloadedEver { get; set; }
         [JsonProperty("downloadLimit")]
         public int DownloadLimit { get; set; }
         [JsonProperty("downloadLimited")]
@@ -205,7 +349,7 @@ namespace Transmission.Api
         [JsonProperty("haveUnchecked")]
         public int HaveUnchecked { get; set; }
         [JsonProperty("haveValid")]
-        public int HaveValid { get; set; }
+        public long HaveValid { get; set; }
         [JsonProperty("honorsSessionLimits")]
         public bool HonorsSessionLimits { get; set; }
         [JsonProperty("id")]
@@ -217,7 +361,7 @@ namespace Transmission.Api
         [JsonProperty("isStalled")]
         public bool IsStalled { get; set; }
         [JsonProperty("leftUntilDone")]
-        public int LeftUntilDone { get; set; }
+        public long LeftUntilDone { get; set; }
         [JsonProperty("magnetLink")]
         public string MagnetLink { get; set; }
         [JsonProperty("manualAnnounceTime")]
@@ -274,7 +418,7 @@ namespace Transmission.Api
         [JsonProperty("seedRatioMode")]
         public int SeedRatioMode { get; set; }
         [JsonProperty("sizeWhenDone")]
-        public int SizeWhenDone { get; set; }
+        public long SizeWhenDone { get; set; }
         [JsonProperty("startDate")]
         public int StartDate { get; set; }
         [JsonProperty("status")]
@@ -284,11 +428,11 @@ namespace Transmission.Api
         [JsonProperty("trackerStats")]
         public TrackerStats[] TrackerStats { get; set; }
         [JsonProperty("totalSize")]
-        public int TotalSize { get; set; }
+        public long TotalSize { get; set; }
         [JsonProperty("torrentFile")]
         public string TorrentFile { get; set; }
         [JsonProperty("uploadedEver")]
-        public int UploadedEver { get; set; }
+        public long UploadedEver { get; set; }
         [JsonProperty("uploadLimit")]
         public int UploadLimit { get; set; }
         [JsonProperty("uploadLimited")]
@@ -445,7 +589,7 @@ namespace Transmission.Api
         public int Tier { get; set; }
     }
 
-public class TorrentGetResponse
+    public class TorrentGetResponse
     {
         [JsonProperty("torrents")]
         public Torrent[] Torrents { get; set; }
@@ -480,7 +624,7 @@ public class TorrentGetResponse
         public abstract string MethodName { get; }
     }
 
-    internal class Request<T> where T: ArgumentsBase
+    internal class Request<T> where T : ArgumentsBase
     {
         [JsonProperty("method")]
         public string Method => Arguments.MethodName;
