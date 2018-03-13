@@ -45,6 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Entities\File.cs" />
+    <Compile Include="Entities\FileStats.cs" />
+    <Compile Include="Entities\Peer.cs" />
+    <Compile Include="Entities\PeersFrom.cs" />
+    <Compile Include="Entities\Torrent.cs" />
+    <Compile Include="Entities\TorrentField.cs" />
+    <Compile Include="Entities\TorrentFields.cs" />
+    <Compile Include="Entities\Tracker.cs" />
+    <Compile Include="Entities\TrackerStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
