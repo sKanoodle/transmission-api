@@ -11,7 +11,7 @@ using Transmission.Api.Entities;
 
 namespace Transmission.Api
 {
-    public class Client
+    public partial class Client
     {
         private const string ID_HEADER = "X-Transmission-Session-Id";
         private readonly HttpClient HttpClient;
@@ -27,74 +27,6 @@ namespace Transmission.Api
         {
             Address = address;
             HttpClient = new HttpClient();
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync()
-        {
-            return await TorrentGetAsync(TorrentFields.All);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields)
-        {
-            return await TorrentGetAsync(fields, (string)null);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(int id)
-        {
-            return await TorrentGetAsync(TorrentFields.All, id);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, int id)
-        {
-            return await TorrentGetAsync<int>(fields, id);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids)
-        {
-            return await TorrentGetAsync(TorrentFields.All, ids);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids)
-        {
-            return await TorrentGetAsync(fields, ids.ToArray());
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<string> hashes)
-        {
-            return await TorrentGetAsync(TorrentFields.All, hashes);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<string> hashes)
-        {
-            return await TorrentGetAsync(fields, hashes.ToArray());
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids, IEnumerable<string> hashes)
-        {
-            return await TorrentGetAsync(TorrentFields.All, ids, hashes);
-        }
-
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids, IEnumerable<string> hashes)
-        {
-            return await TorrentGetAsync(fields, ((IEnumerable<object>)ids).Concat(hashes).ToArray());
-        }
-
-        private async Task<Torrent[]> TorrentGetAsync<T>(TorrentFields fields, T ids)
-        {
-            var request = new TorrentGetRequest<T> { Fields = fields.ToStringRepresentation(), IDs = ids };
-            var response = await GetResponseAsync<TorrentGetResponse, TorrentGetRequest<T>>(request);
-            return response.Torrents;
-        }
-
-        public async Task<TorrentGetResponse> TorrentGetRecentAsync()
-        {
-            return await TorrentGetRecentAsync(TorrentFields.All);
-        }
-
-        public async Task<TorrentGetResponse> TorrentGetRecentAsync(TorrentFields fields)
-        {
-            var request = new TorrentGetRequest<string> { Fields = fields.ToStringRepresentation(), IDs = "recently-active" };
-            return await GetResponseAsync<TorrentGetResponse, TorrentGetRequest<string>>(request);
         }
 
         private async Task<T> GetResponseAsync<T, U>(U request) where U : ArgumentsBase
