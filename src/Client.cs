@@ -62,7 +62,7 @@ namespace Transmission.Api
         public int Tag { get; set; }
     }
 
-    internal abstract class ArgumentsBase
+    public abstract class ArgumentsBase
     {
         [JsonIgnore]
         public abstract string MethodName { get; }

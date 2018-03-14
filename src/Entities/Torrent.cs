@@ -9,7 +9,7 @@ namespace Transmission.Api.Entities
         [JsonProperty("addedDate")]
         public int AddedDate { get; set; }
         [JsonProperty("bandwidthPriority")]
-        public int BandwidthPriority { get; set; }
+        public sbyte BandwidthPriority { get; set; }
         [JsonProperty("comment")]
         public string Comment { get; set; }
         [JsonProperty("corruptEver")]
@@ -94,7 +94,7 @@ namespace Transmission.Api.Entities
         [JsonProperty("pieceSize")]
         public int PieceSize { get; set; }
         [JsonProperty("priorities")]
-        public int[] Priorities { get; set; }
+        public sbyte[] Priorities { get; set; }
         [JsonProperty("queuePosition")]
         public int QueuePosition { get; set; }
         [JsonProperty("rateDownload")]
