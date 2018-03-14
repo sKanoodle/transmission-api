@@ -12,27 +12,27 @@ namespace Transmission.Api
         /// <summary>
         /// Gets all torrents with all fields.
         /// </summary>
-        public async Task<Torrent[]> TorrentGetAsync()
+        public Task<Torrent[]> TorrentGetAsync()
         {
-            return await TorrentGetAsync(TorrentFields.All);
+            return TorrentGetAsync(TorrentFields.All);
         }
 
         /// <summary>
         /// Gets all torrents with the specified fields.
         /// </summary>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields)
+        public Task<Torrent[]> TorrentGetAsync(TorrentFields fields)
         {
-            return await TorrentGetAsync(fields, (string)null);
+            return TorrentGetAsync(fields, (string)null);
         }
 
         /// <summary>
         /// Gets all fields for the single torrent matching the ID.
         /// </summary>
         /// <param name="id">single torrent ID</param>
-        public async Task<Torrent[]> TorrentGetAsync(int id)
+        public Task<Torrent[]> TorrentGetAsync(int id)
         {
-            return await TorrentGetAsync(TorrentFields.All, id);
+            return TorrentGetAsync(TorrentFields.All, id);
         }
 
         /// <summary>
@@ -40,18 +40,18 @@ namespace Transmission.Api
         /// </summary>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="id">single torrent ID</param>
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, int id)
+        public Task<Torrent[]> TorrentGetAsync(TorrentFields fields, int id)
         {
-            return await TorrentGetAsync<int>(fields, id);
+            return TorrentGetAsync<int>(fields, id);
         }
 
         /// <summary>
         /// Gets all fields for those torrents matching the torrent IDs.
         /// </summary>
         /// <param name="ids">collection of torrent IDs</param>
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids)
+        public Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids)
         {
-            return await TorrentGetAsync(TorrentFields.All, ids);
+            return TorrentGetAsync(TorrentFields.All, ids);
         }
 
         /// <summary>
@@ -59,18 +59,18 @@ namespace Transmission.Api
         /// </summary>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="ids">collection of torrent IDs</param>
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids)
+        public Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids)
         {
-            return await TorrentGetAsync(fields, ids.ToArray());
+            return TorrentGetAsync(fields, ids.ToArray());
         }
 
         /// <summary>
         /// Gets all fields for those torrents matching the hashes.
         /// </summary>
         /// <param name="hashes">collection of torrent-hashes</param>
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<string> hashes)
+        public Task<Torrent[]> TorrentGetAsync(IEnumerable<string> hashes)
         {
-            return await TorrentGetAsync(TorrentFields.All, hashes);
+            return TorrentGetAsync(TorrentFields.All, hashes);
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Transmission.Api
         /// </summary>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="hashes">collection of torrent-hashes</param>
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<string> hashes)
+        public Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<string> hashes)
         {
-            return await TorrentGetAsync(fields, hashes.ToArray());
+            return TorrentGetAsync(fields, hashes.ToArray());
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace Transmission.Api
         /// </summary>
         /// <param name="ids">collection of torrent IDs</param>
         /// <param name="hashes">collection of torrent-hashes</param>
-        public async Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids, IEnumerable<string> hashes)
+        public Task<Torrent[]> TorrentGetAsync(IEnumerable<int> ids, IEnumerable<string> hashes)
         {
-            return await TorrentGetAsync(TorrentFields.All, ids, hashes);
+            return TorrentGetAsync(TorrentFields.All, ids, hashes);
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace Transmission.Api
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="ids">collection of torrent IDs</param>
         /// <param name="hashes">collection of torrent-hashes</param>
-        public async Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids, IEnumerable<string> hashes)
+        public Task<Torrent[]> TorrentGetAsync(TorrentFields fields, IEnumerable<int> ids, IEnumerable<string> hashes)
         {
-            return await TorrentGetAsync(fields, ((IEnumerable<object>)ids).Concat(hashes).ToArray());
+            return TorrentGetAsync(fields, ((IEnumerable<object>)ids).Concat(hashes).ToArray());
         }
 
         /// <summary>
@@ -120,19 +120,19 @@ namespace Transmission.Api
         /// <summary>
         /// Gets all fields of all recently-active torrents.
         /// </summary>
-        public async Task<TorrentGetResponse> TorrentGetRecentAsync()
+        public Task<TorrentGetResponse> TorrentGetRecentAsync()
         {
-            return await TorrentGetRecentAsync(TorrentFields.All);
+            return TorrentGetRecentAsync(TorrentFields.All);
         }
 
         /// <summary>
         /// Gets the specified fields of all recently-active torrents.
         /// </summary>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
-        public async Task<TorrentGetResponse> TorrentGetRecentAsync(TorrentFields fields)
+        public Task<TorrentGetResponse> TorrentGetRecentAsync(TorrentFields fields)
         {
             var request = new TorrentGetRequest<string> { Fields = fields.ToStringRepresentation(), IDs = "recently-active" };
-            return await GetResponseAsync<TorrentGetResponse, TorrentGetRequest<string>>(request);
+            return GetResponseAsync<TorrentGetResponse, TorrentGetRequest<string>>(request);
         }
     }
 }
