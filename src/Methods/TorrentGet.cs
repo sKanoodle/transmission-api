@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,7 +85,7 @@ namespace Transmission.Api
         }
 
         /// <summary>
-        /// Gets all fields for the those torrents matching either the IDs or hashes.
+        /// Gets all fields for those torrents matching either the IDs or hashes.
         /// </summary>
         /// <param name="ids">collection of torrent IDs</param>
         /// <param name="hashes">collection of torrent-hashes</param>
@@ -105,9 +106,9 @@ namespace Transmission.Api
         }
 
         /// <summary>
-        /// Gets the specified fields for any type of torrent-identifier (see supported values in transmission-rpc spec or <paramref name="ids"/>
+        /// Gets the specified fields for torrents matching any type of torrent-identifier (see supported values in transmission-rpc spec or <paramref name="ids"/>).
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">type of IDs</typeparam>
         /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="ids">any type of supported value as ID (list of ints, hashstrings, or both in one list, int, (the string "recently-active" is a valid argument, but is handled in <see cref="TorrentGetRecentAsync"/>, because it causes the result to have a new array with recently-deleted IDs))</param>
         private async Task<Torrent[]> TorrentGetAsync<T>(TorrentFields fields, T ids)
@@ -134,5 +135,24 @@ namespace Transmission.Api
             var request = new TorrentGetRequest<string> { Fields = fields.ToStringRepresentation(), IDs = "recently-active" };
             return GetResponseAsync<TorrentGetResponse, TorrentGetRequest<string>>(request);
         }
+    }
+
+    public class TorrentGetResponse
+    {
+        [JsonProperty("torrents")]
+        public Torrent[] Torrents { get; set; }
+        [JsonProperty("removed")]
+        public int[] Removed { get; set; }
+    }
+
+    internal class TorrentGetRequest<T> : ArgumentsBase
+    {
+        public override string MethodName => "torrent-get";
+
+        [JsonProperty("fields")]
+        public string[] Fields { get; set; }
+
+        [JsonProperty("ids")]
+        public T IDs { get; set; }
     }
 }

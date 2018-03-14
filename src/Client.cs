@@ -47,32 +47,16 @@ namespace Transmission.Api
         }
     }
 
-    public class TorrentGetResponse
+    internal class Response<T> : ResponseBase
     {
-        [JsonProperty("torrents")]
-        public Torrent[] Torrents { get; set; }
-        [JsonProperty("removed")]
-        public int[] Removed { get; set; }
+        [JsonProperty("arguments")]
+        public T Data { get; set; }
     }
 
-    internal class TorrentGetRequest<T> : ArgumentsBase
-    {
-        public override string MethodName => "torrent-get";
-
-        [JsonProperty("fields")]
-        public string[] Fields { get; set; }
-
-        [JsonProperty("ids")]
-        public T IDs { get; set; }
-    }
-
-    internal class Response<T>
+    internal class ResponseBase
     {
         [JsonProperty("result")]
         public string Result { get; set; }
-
-        [JsonProperty("arguments")]
-        public T Data { get; set; }
 
         [JsonProperty("tag")]
         public int Tag { get; set; }
