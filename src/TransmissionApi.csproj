@@ -63,6 +63,8 @@
     <Compile Include="Methods\TorrentStop.cs" />
     <Compile Include="Methods\TorrentVerify.cs" />
     <Compile Include="Methods\TorrentAdd.cs" />
+    <Compile Include="Methods\TorrentRemove.cs" />
+    <Compile Include="Methods\TorrentSetLocation.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

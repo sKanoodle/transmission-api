@@ -66,7 +66,6 @@ namespace Transmission.Api
         /// Starts torrents matching any type of torrent-identifier (see supported values in transmission-rpc spec or <paramref name="ids"/>).
         /// </summary>
         /// <typeparam name="T">type of IDs</typeparam>
-        /// <param name="fields">fields to get, multiple fields can be combined with "|"</param>
         /// <param name="ids">any type of supported value as ID (list of ints, hashstrings, or both in one list, int, (the string "recently-active" is a valid argument, but is handled in <see cref="TorrentStartRecentAsync"/>, because it causes the result to have a new array with recently-deleted IDs))</param>
         private async Task TorrentStartAsync<T>(T ids)
         {
