@@ -77,7 +77,8 @@ namespace Transmission.Api
         /// <param name="deleteLocalData">delete local data</param>
         private async Task TorrentRemoveAsync<T>(T ids, bool deleteLocalData)
         {
-            await GetResponseAsync<ResponseBase, TorrentRemoveRequest<T>>(new TorrentRemoveRequest<T>{ Ids = ids, DeleteLocalData = deleteLocalData });
+            // response will always be null, string is placeholder
+            await GetResponseAsync<string, TorrentRemoveRequest<T>>(new TorrentRemoveRequest<T>{ Ids = ids, DeleteLocalData = deleteLocalData });
         }
     }
 

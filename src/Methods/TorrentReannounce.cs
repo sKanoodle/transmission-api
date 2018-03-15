@@ -68,7 +68,8 @@ namespace Transmission.Api
         /// <param name="ids">any type of supported value as ID (list of ints, hashstrings, or both in one list, int, (the string "recently-active" is a valid argument, but is handled in <see cref="TorrentReannounceRecentAsync"/>, because it causes the result to have a new array with recently-deleted IDs))</param>
         private async Task TorrentReannounceAsync<T>(T ids)
         {
-            await GetResponseAsync<ResponseBase, TorrentActionRequest<T>>(new TorrentActionRequest<T>("torrent-start") { Ids = ids });
+            // response will always be null, string is placeholder
+            await GetResponseAsync<string, TorrentActionRequest<T>>(new TorrentActionRequest<T>("torrent-start") { Ids = ids });
         }
     }
 }

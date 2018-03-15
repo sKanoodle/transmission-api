@@ -83,7 +83,8 @@ namespace Transmission.Api
         /// <param name="move">If true, move from previous location. Otherwise, search "location" for files. (default: false)</param>
         private async Task TorrentSetLocationAsync<T>(T ids, string location, bool move)
         {
-            await GetResponseAsync<ResponseBase, SetLocationRequest<T>>(new SetLocationRequest<T> { Ids = ids, Location = location, Move = move });
+            // response will always be null, string is placeholder
+            await GetResponseAsync<string, SetLocationRequest<T>>(new SetLocationRequest<T> { Ids = ids, Location = location, Move = move });
         }
     }
 
