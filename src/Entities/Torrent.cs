@@ -120,7 +120,7 @@ namespace Transmission.Api.Entities
         [JsonProperty("startDate")]
         public int StartDate { get; set; }
         [JsonProperty("status")]
-        public int Status { get; set; }
+        public Status Status { get; set; }
         [JsonProperty("trackers")]
         public Tracker[] Trackers { get; set; }
         [JsonProperty("trackerStats")]
@@ -143,5 +143,40 @@ namespace Transmission.Api.Entities
         public string[] Webseeds { get; set; }
         [JsonProperty("webseedsSendingToUs")]
         public int WebseedsSendingToUs { get; set; }
+    }
+
+    /// <summary>
+    /// What the torrent is doing right now.
+    /// </summary>
+    public enum Status
+    {
+        /// <summary>
+        /// Torrent is stopped
+        /// </summary>
+        Stopped,
+        /// <summary>
+        /// Queued to check files
+        /// </summary>
+        CheckWait,
+        /// <summary>
+        /// Checking files
+        /// </summary>
+        Check,
+        /// <summary>
+        /// Queued to download
+        /// </summary>
+        DownloadWait,
+        /// <summary>
+        /// Downloading
+        /// </summary>
+        Download,
+        /// <summary>
+        /// Queued to seed
+        /// </summary>
+        SeedWait,
+        /// <summary>
+        /// Seeding
+        /// </summary>
+        Seed,
     }
 }
