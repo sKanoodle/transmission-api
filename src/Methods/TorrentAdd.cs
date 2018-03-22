@@ -17,9 +17,9 @@ namespace Transmission.Api
         /// <param name="paused">sets the download to paused after uploading</param>
         /// <param name="downloadDir">sets the target downloaddir</param>
         /// <returns>an indicator of success and the new/existing torrent</returns>
-        public Task<TorrentAdded> TorrentAdd(string filename, bool paused = false, string downloadDir = null)
+        public Task<TorrentAdded> TorrentAddAsync(string filename, bool paused = false, string downloadDir = null)
         {
-            return TorrentAdd(new TorrentAddRequest {FileName = filename, Paused = paused, DownloadDir = downloadDir });
+            return TorrentAddAsync(new TorrentAddRequest {FileName = filename, Paused = paused, DownloadDir = downloadDir });
         }
 
         /// <summary>
@@ -29,9 +29,9 @@ namespace Transmission.Api
         /// <param name="paused">sets the download to paused after uploading</param>
         /// <param name="downloadDir">sets the target downloaddir</param>
         /// <returns>an indicator of success and the new/existing torrent</returns>
-        public Task<TorrentAdded> TorrentAddBase64(string base64, bool paused = false, string downloadDir = null)
+        public Task<TorrentAdded> TorrentAddBase64Async(string base64, bool paused = false, string downloadDir = null)
         {
-            return TorrentAdd(new TorrentAddRequest { MetaInfo = base64, Paused = paused, DownloadDir = downloadDir });
+            return TorrentAddAsync(new TorrentAddRequest { MetaInfo = base64, Paused = paused, DownloadDir = downloadDir });
         }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace Transmission.Api
         /// <param name="paused">sets the download to paused after uploading</param>
         /// <param name="downloadDir">sets the target downloaddir</param>
         /// <returns>an indicator of success and the new/existing torrent</returns>
-        public Task<TorrentAdded> TorrentAddPath(string path, bool paused = false, string downloadDir = null)
+        public Task<TorrentAdded> TorrentAddPathAsync(string path, bool paused = false, string downloadDir = null)
         {
             string base64 = Convert.ToBase64String(File.ReadAllBytes(path));
-            return TorrentAddBase64(base64, paused, downloadDir);
+            return TorrentAddBase64Async(base64, paused, downloadDir);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Transmission.Api
         /// </summary>
         /// <param name="arguments">settings for torrent that should be added</param>
         /// <returns>an indicator of success and the new/existing torrent</returns>
-        public async Task<TorrentAdded> TorrentAdd(TorrentAddRequest arguments)
+        public async Task<TorrentAdded> TorrentAddAsync(TorrentAddRequest arguments)
         {
             var result = await GetResponseAsync<TorrentAddResponse, TorrentAddRequest>(arguments);
             if (result.Added is LightweightTorrent added)
