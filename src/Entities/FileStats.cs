@@ -5,7 +5,7 @@ namespace Transmission.Api.Entities
     public class FileStats
     {
         [JsonProperty("bytesCompleted")]
-        public long BytesCompleted { get; set; }
+        public ulong BytesCompleted { get; set; }
         [JsonProperty("wanted")]
         public bool Wanted { get; set; }
         [JsonProperty("priority")]

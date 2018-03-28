@@ -7,7 +7,7 @@ namespace Transmission.Api.Entities
         [JsonProperty("announce")]
         public string Announce { get; set; }
         [JsonProperty("id")]
-        public int ID { get; set; }
+        public uint Id { get; set; }
         [JsonProperty("scrape")]
         public string Scrape { get; set; }
         [JsonProperty("tier")]

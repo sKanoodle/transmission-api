@@ -5,9 +5,9 @@ namespace Transmission.Api.Entities
     public class File
     {
         [JsonProperty("bytesCompleted")]
-        public long BytesCompleted { get; set; }
+        public ulong BytesCompleted { get; set; }
         [JsonProperty("length")]
-        public long Length { get; set; }
+        public ulong Length { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
     }
