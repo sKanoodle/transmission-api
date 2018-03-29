@@ -57,8 +57,8 @@ namespace Transmission.Api
             var result = await GetResponseAsync<TorrentAddResponse, TorrentAddRequest>(arguments);
             if (result.Added is LightweightTorrent added)
                 return new TorrentAdded { Result = TorrentAddResult.Added, Torrent = added };
-            if (result.Duplicate is LightweightTorrent dublicate)
-                return new TorrentAdded { Result = TorrentAddResult.Duplicate, Torrent = dublicate };
+            if (result.Duplicate is LightweightTorrent duplicate)
+                return new TorrentAdded { Result = TorrentAddResult.Duplicate, Torrent = duplicate };
             return new TorrentAdded { Result = TorrentAddResult.Error };
         }
     }
