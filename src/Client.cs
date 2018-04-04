@@ -23,10 +23,32 @@ namespace Transmission.Api
             HttpClient = new HttpClient(new HttpClientHandler { Credentials = new NetworkCredential(user, pass) });
         }
 
+        public Client(string address, string user, System.Security.SecureString pass)
+        {
+            Address = address;
+            HttpClient = new HttpClient(new HttpClientHandler { Credentials = new NetworkCredential(user, pass) });
+        }
+
         public Client(string address)
         {
             Address = address;
             HttpClient = new HttpClient();
+        }
+
+        /// <summary>
+        /// Check if the supplied credentials are correct and allow a communication with the remote host.
+        /// </summary>
+        public async Task<bool> TryCredentialsAsync()
+        {
+            try
+            {
+                await TorrentGetAsync(TorrentFields.AddedDate, 0);
+            }
+            catch (System.Security.Authentication.AuthenticationException)
+            {
+                return false;
+            }
+            return true;
         }
 
         private async Task<T> GetResponseAsync<T, U>(U request) where U : ArgumentsBase
@@ -41,6 +63,8 @@ namespace Transmission.Api
                     HttpClient.DefaultRequestHeaders.Remove(ID_HEADER);
                     HttpClient.DefaultRequestHeaders.Add(ID_HEADER, response.Headers.GetValues(ID_HEADER));
                     return await GetResponseAsync<T, U>(request);
+                case HttpStatusCode.Unauthorized:
+                    throw new System.Security.Authentication.AuthenticationException("Server returned Http Status 401 (Unauthorized). Wrong password or unsername?");
                 default:
                     throw new NotImplementedException();
             }
