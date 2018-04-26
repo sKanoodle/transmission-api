@@ -54,7 +54,9 @@ namespace Transmission.Api
         private async Task<T> GetResponseAsync<T, U>(U request) where U : ArgumentsBase
         {
             var wrappedRequest = new Request<U> { Arguments = request };
-            var response = await HttpClient.PostAsync(Address, new StringContent(JsonConvert.SerializeObject(wrappedRequest, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore })));
+            string requestString = JsonConvert.SerializeObject(wrappedRequest, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore });
+            System.Diagnostics.Debug.WriteLine($"posting request: {requestString}");
+            var response = await HttpClient.PostAsync(Address, new StringContent(requestString));
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
