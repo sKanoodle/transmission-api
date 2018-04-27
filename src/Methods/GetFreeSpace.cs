@@ -14,9 +14,9 @@ namespace Transmission.Api
             return GetFreeSpaceAsync("/");
         }
 
-        public async Task<GetFreeSpaceResponse> GetFreeSpaceAsync(string path)
+        public Task<GetFreeSpaceResponse> GetFreeSpaceAsync(string path)
         {
-            return await GetResponseAsync<GetFreeSpaceResponse, GetFreeSpaceArguments>(new GetFreeSpaceArguments { Path = path });
+            return GetResponseAsync<GetFreeSpaceResponse, GetFreeSpaceArguments>(new GetFreeSpaceArguments { Path = path });
         }
     }
 

@@ -56,6 +56,7 @@
     <Compile Include="Entities\Tracker.cs" />
     <Compile Include="Entities\TrackerStats.cs" />
     <Compile Include="Methods\GetFreeSpace.cs" />
+    <Compile Include="Methods\GetSessionStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Methods\TorrentGet.cs" />
     <Compile Include="Methods\TorrentReannounce.cs" />
