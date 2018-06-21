@@ -62,13 +62,22 @@ namespace Transmission.Api
                 case HttpStatusCode.OK:
                     return JsonConvert.DeserializeObject<Response<T>>(await response.Content.ReadAsStringAsync()).Data;
                 case HttpStatusCode.Conflict: // 409 means header with session ID is not set, so just set header and try again
-                    HttpClient.DefaultRequestHeaders.Remove(ID_HEADER);
-                    HttpClient.DefaultRequestHeaders.Add(ID_HEADER, response.Headers.GetValues(ID_HEADER));
+                    SetTransmissionSessionHeader(response.Headers.GetValues(ID_HEADER));
                     return await GetResponseAsync<T, U>(request);
                 case HttpStatusCode.Unauthorized:
                     throw new System.Security.Authentication.AuthenticationException("Server returned Http Status 401 (Unauthorized). Wrong password or unsername?");
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        private object Lock = new object();
+        private void SetTransmissionSessionHeader(IEnumerable<string> values)
+        {
+            lock (Lock)
+            {
+                HttpClient.DefaultRequestHeaders.Remove(ID_HEADER);
+                HttpClient.DefaultRequestHeaders.Add(ID_HEADER, values);
             }
         }
     }
