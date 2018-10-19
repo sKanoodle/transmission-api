@@ -97,7 +97,7 @@ namespace Transmission.Api.Entities
         /// if <see cref="HasAnnounced"/> is false, this field is undefined
         /// </summary>
         [JsonProperty("lastScrapeSucceeded")]
-        public string LastScrapeSucceeded { get; set; }
+        public bool LastScrapeSucceeded { get; set; }
         /// <summary>
         /// when the last scrape was completed.
         /// if <see cref="HasScraped"/> is false, this field is undefined
