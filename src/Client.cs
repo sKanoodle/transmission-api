@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,9 +36,9 @@ namespace Transmission.Api
         }
 
         /// <summary>
-        /// Check if the supplied credentials are correct and allow a communication with the remote host.
+        /// Check if the supplied address and credentials are correct and allow a communication with the remote host.
         /// </summary>
-        public async Task<bool> TryCredentialsAsync()
+        public async Task<(bool Success, string Message)> TryCredentialsAsync()
         {
             try
             {
@@ -46,9 +46,13 @@ namespace Transmission.Api
             }
             catch (System.Security.Authentication.AuthenticationException)
             {
-                return false;
+                return (false, "Wrong password/username. Please try again!");
             }
-            return true;
+            catch (Exception)
+            {
+                return (false, "Wrong url or no internet connectivity. Please confirm address of your server!");
+            }
+            return (true, null);
         }
 
         private async Task<T> GetResponseAsync<T, U>(U request) where U : ArgumentsBase
