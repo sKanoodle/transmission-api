@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transmission.Api", "src\TransmissionApi.csproj", "{921BCF23-249E-4AE6-AD6F-EFBFAB60116D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransmissionApi", "src\TransmissionApi.csproj", "{0CBDE13D-7A78-49C6-8F02-CE4C29E81228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{921BCF23-249E-4AE6-AD6F-EFBFAB60116D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{921BCF23-249E-4AE6-AD6F-EFBFAB60116D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{921BCF23-249E-4AE6-AD6F-EFBFAB60116D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{921BCF23-249E-4AE6-AD6F-EFBFAB60116D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBDE13D-7A78-49C6-8F02-CE4C29E81228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CBDE13D-7A78-49C6-8F02-CE4C29E81228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CBDE13D-7A78-49C6-8F02-CE4C29E81228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CBDE13D-7A78-49C6-8F02-CE4C29E81228}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
